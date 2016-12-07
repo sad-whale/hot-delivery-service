@@ -24,6 +24,7 @@ namespace hot_delivery_service.CommandHandlers
             {
                 delivery.Status = DeliveySatus.Taken;
                 delivery.UserId = command.UserId;
+                delivery.ModificationDate = DateTime.Now;
 
                 _workUnit.SaveChanges();
             }
@@ -35,6 +36,7 @@ namespace hot_delivery_service.CommandHandlers
             if (delivery != null)
             {
                 delivery.Status = DeliveySatus.Expired;
+                delivery.ModificationDate = DateTime.Now;
 
                 _workUnit.SaveChanges();
             }
@@ -45,6 +47,7 @@ namespace hot_delivery_service.CommandHandlers
             var delivery = _workUnit.Deliveries.Create();
             delivery.Title = command.Title;
             delivery.CreationDate = DateTime.Now;
+            delivery.ModificationDate = delivery.CreationDate;
             delivery.ExpirationTime = command.ExpirationTime;
             delivery.Status = DeliveySatus.Available;
 

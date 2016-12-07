@@ -25,14 +25,14 @@ namespace hot_delivery_service.Controllers
             _queryFacade = queryFacade;
         }
 
-        [HttpGet]
+        [HttpGet("api/available")]
         public string GetAvailableDeliveries()
         {
             var deliveries = _queryFacade.Deliveries.Where(d => d.Status == DeliveySatus.Available).ToList<Delivery>();
             return JsonConvert.SerializeObject(deliveries);
         }
         
-        [HttpPost]
+        [HttpPost("api/take")]
         public void TakeDelivery(int userId, int deliveryId)
         {
             var delivery = _queryFacade.Deliveries.FirstOrDefault(d => d.Id == deliveryId);
@@ -52,5 +52,11 @@ namespace hot_delivery_service.Controllers
                 _commandHandler.Handle(command);
             }
         }
+
+        //[HttpGet("api/create")]
+        //public int CreateTest()
+        //{
+        //    return _commandHandler.Handle(new CreateDeliveryCommand() { Title = "Test", ExpirationTime = 10 });
+        //}
     }
 }

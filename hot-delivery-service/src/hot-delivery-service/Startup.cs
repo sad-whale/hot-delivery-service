@@ -10,6 +10,10 @@ using Microsoft.Extensions.Logging;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Diagnostics;
 using System.Text;
+using hot_delivery_service.Queries;
+using hot_delivery_service.Persistence;
+using hot_delivery_service.CommandHandlers;
+using hot_delivery_service.Helpers;
 
 namespace hot_delivery_service
 {
@@ -30,6 +34,13 @@ namespace hot_delivery_service
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddOptions();
+
+            services.Configure<DeliveryOptions>(Configuration);
+
+            services.AddTransient<IDeliveryWorkUnitProvider, DeliveryWorkUnitProvider>();
+            services.AddTransient<IDeliveryQuery, DeliveryQuery>();
+            services.AddTransient<IDeliveryCommandHandler, DeliveryCommandHandler>();
             // Add framework services.
             services.AddMvc();
         }
@@ -44,10 +55,9 @@ namespace hot_delivery_service
             app.UseExceptionHandler(errorApp =>
             {
                 //пишем в ответ код 500
-                //и информацию об исключении в формате json
                 errorApp.Run(async context =>
                 {
-                    context.Response.StatusCode = 500; // or another Status accordingly to Exception Type
+                    context.Response.StatusCode = 500;
                     context.Response.ContentType = "application/json";
 
                     var error = context.Features.Get<IExceptionHandlerFeature>();
