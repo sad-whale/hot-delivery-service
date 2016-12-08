@@ -36,7 +36,7 @@ namespace hot_delivery_service.Persistence.File
                         if (list == null)
                             list = new List<Delivery>();
                     }
-                    catch
+                    catch(Exception ex)
                     {
                         list = new List<Delivery>();
                     }

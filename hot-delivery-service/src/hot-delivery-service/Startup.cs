@@ -17,6 +17,8 @@ using hot_delivery_service.Helpers;
 using hot_delivery_service.Persistence.SQLite;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.DotNet.InternalAbstractions;
+using hot_delivery_service.Scheduler;
+using Quartz.Spi;
 
 namespace hot_delivery_service
 {
@@ -49,12 +51,16 @@ namespace hot_delivery_service
             services.AddTransient<IDeliveryWorkUnitProvider, DeliveryWorkUnitProvider>();
             services.AddTransient<IDeliveryQuery, DeliveryQuery>();
             services.AddTransient<IDeliveryCommandHandler, DeliveryCommandHandler>();
+            services.AddSingleton<IDeliveryScheduler, DeliveryScheduler>();
+            services.AddTransient<IJobFactory, CustomJobFactory>();
+            services.AddTransient<CreateDeliveryJob, CreateDeliveryJob>();
+            services.AddTransient<ExpireDeliveriesJob, ExpireDeliveriesJob>();
             // Add framework services.
             services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory, IServiceProvider serviceProvider)
         {
             loggerFactory.AddConsole(Configuration.GetSection("Logging"));
             loggerFactory.AddDebug();
@@ -79,6 +85,9 @@ namespace hot_delivery_service
             });
 
             app.UseMvc();
+
+            var scheduler = serviceProvider.GetService<IDeliveryScheduler>();
+            scheduler.StartTasks(); 
         }
     }
 }
