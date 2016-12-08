@@ -7,6 +7,7 @@ using Quartz;
 
 namespace hot_delivery_service.Scheduler
 {
+    //реализация кастомной джоб фабрики, позволяющей использовать dependency injection в классах задач
     public class CustomJobFactory : IJobFactory
     {
         private IServiceProvider _serviceProvider;
@@ -23,8 +24,7 @@ namespace hot_delivery_service.Scheduler
             {
                 IJobDetail jobDetail = bundle.JobDetail;
                 Type jobType = jobDetail.JobType;
-
-                // Return job that is registrated in container
+                
                 return (IJob)_serviceProvider.GetService(jobType);
             }
             catch (Exception e)

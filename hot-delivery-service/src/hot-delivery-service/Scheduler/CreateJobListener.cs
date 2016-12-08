@@ -4,8 +4,10 @@ using Quartz;
 
 namespace hot_delivery_service.Scheduler
 {
+    //джоб-лиснер, перепланирующий таску создания доставки
     internal class CreateJobListener : IJobListener
     {
+        //функция, создающая новый триггер (задается извне)
         private Func<ITrigger> _createTriggerFunction;
 
         public CreateJobListener(Func<ITrigger> createTriggerFunction)

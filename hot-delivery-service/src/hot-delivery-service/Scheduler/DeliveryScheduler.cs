@@ -28,6 +28,7 @@ namespace hot_delivery_service.Scheduler
 
         private Random _random;
 
+        //внедрение зависимостей
         public DeliveryScheduler(IDeliveryQuery query, IDeliveryCommandHandler commandHandler, IOptions<SchedulerOptions> optionsAccessor, IJobFactory jobFactory)
         {
             _query = query;
@@ -41,6 +42,7 @@ namespace hot_delivery_service.Scheduler
             _random = new Random();
         }
 
+        //создание quartz планировщика, задач и их запуск
         public void StartTasks()
         {
             ISchedulerFactory schedFact = new StdSchedulerFactory();
@@ -62,9 +64,11 @@ namespace hot_delivery_service.Scheduler
             sched.ScheduleJob(createJob, createTrigger);
             sched.ScheduleJob(expireJob, expireTrigger);
 
+            //добавляем джоб-лиснер, в котором задача создания новой доставки будет перепланироваться с новым интервалом
             sched.ListenerManager.AddJobListener(new CreateJobListener(() => BuildCreateTrigger()), KeyMatcher<JobKey>.KeyEquals(new JobKey("createJob", "deliveryGroup")));
         }
 
+        //создание тригера для таски создания доставки
         private ITrigger BuildCreateTrigger()
         {
             var delayTime = _random.Next(_createIntervalMin, _createIntervalMax);
@@ -77,6 +81,7 @@ namespace hot_delivery_service.Scheduler
             return trigger;
         }
 
+        //создание тригера для таски пометки просроченных доставок
         private ITrigger BuildExpireTrigger()
         {
             var delayTime = 10;
