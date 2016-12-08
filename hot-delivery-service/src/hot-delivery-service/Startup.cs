@@ -49,7 +49,7 @@ namespace hot_delivery_service
 
             //регистрация EF контекста для SQLite
             services.AddDbContext<DeliveryContext>(
-                options => { options.UseSqlite($"Data Source=deliveries.db"); });
+                options => { options.UseSqlite($"Data Source=deliveries.db"); }, ServiceLifetime.Transient);
 
             //Регистрация всех компонент
             services.AddTransient<IDeliveryWorkUnitProvider, DeliveryWorkUnitProvider>();
