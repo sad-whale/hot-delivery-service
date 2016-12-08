@@ -6,6 +6,7 @@ using hot_delivery_service.Models;
 
 namespace hot_delivery_service.Persistence.SQLite
 {
+    //реализация юнита для работы с бд sqlite, на основе ef core
     public class SqliteDeliveryWorkUnit : IDeliveryWorkUnit
     {
         private DeliveryContext _context;

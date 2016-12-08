@@ -14,17 +14,20 @@ using Microsoft.AspNetCore.Http;
 
 namespace hot_delivery_service.Controllers
 {
+    //апи контроллер
     public class DeliveriesController : Controller
     {
         private IDeliveryCommandHandler _commandHandler;
         private IDeliveryQuery _queryFacade;
 
+        //внедрение зависимостей
         public DeliveriesController(IDeliveryCommandHandler commandHandler, IDeliveryQuery queryFacade)
         {
             _commandHandler = commandHandler;
             _queryFacade = queryFacade;
         }
 
+        //возвращает все доступные доставки в формате json
         [HttpGet("api/available")]
         public string GetAvailableDeliveries()
         {
@@ -32,31 +35,29 @@ namespace hot_delivery_service.Controllers
             return JsonConvert.SerializeObject(deliveries);
         }
         
+        //закрепить доставку за пользователем
         [HttpPost("api/take")]
         public void TakeDelivery(int userId, int deliveryId)
         {
             var delivery = _queryFacade.Deliveries.FirstOrDefault(d => d.Id == deliveryId);
             if (delivery == null)
             {
+                //404 код, если доставки с указанным id не найдено
                 HttpContext.Response.StatusCode = 404;
                 HttpContext.Response.WriteAsync($"Delivery with id {deliveryId} not found").Wait();
             }
             else if (delivery.Status != DeliveySatus.Available)
             {
+                //422, если доставка не доступна
                 HttpContext.Response.StatusCode = 422;
                 HttpContext.Response.WriteAsync($"Delivery with id {deliveryId} is not available").Wait();
             }
             else
             {
+                //если все ок - назначем
                 AssignToUserCommand command = new AssignToUserCommand() { DeliveryId = delivery.Id, UserId = userId };
                 _commandHandler.Handle(command);
             }
-        }
-
-        [HttpGet("api/create")]
-        public int CreateTest()
-        {
-            return _commandHandler.Handle(new CreateDeliveryCommand() { Title = "Test", ExpirationTime = 10 });
-        }
+        }        
     }
 }

@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 
 namespace hot_delivery_service.Persistence
 {
+    //интерфейс дженерик репозитория
     public interface IRepository<TEntity> : IQueryable<TEntity>, IEnumerable<TEntity>, IQueryable, IEnumerable where TEntity : class
     {
         TEntity Add(TEntity entity);

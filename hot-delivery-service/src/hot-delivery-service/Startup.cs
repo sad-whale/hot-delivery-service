@@ -43,15 +43,21 @@ namespace hot_delivery_service
 
             services.AddOptions();
 
+            //чтение опций из конфига и регистрация в контейнере
             services.Configure<SchedulerOptions>(Configuration);
             services.Configure<StorageOptions>(Configuration);
 
+            //регистрация EF контекста для SQLite
             services.AddDbContext<DeliveryContext>(
                 options => { options.UseSqlite($"Data Source=deliveries.db"); });
+
+            //Регистрация всех компонент
             services.AddTransient<IDeliveryWorkUnitProvider, DeliveryWorkUnitProvider>();
             services.AddTransient<IDeliveryQuery, DeliveryQuery>();
             services.AddTransient<IDeliveryCommandHandler, DeliveryCommandHandler>();
             services.AddSingleton<IDeliveryScheduler, DeliveryScheduler>();
+
+            //регистрация кастомной jobfactory и задач для Quartz net для возможности dependency injection в задачах
             services.AddTransient<IJobFactory, CustomJobFactory>();
             services.AddTransient<CreateDeliveryJob, CreateDeliveryJob>();
             services.AddTransient<ExpireDeliveriesJob, ExpireDeliveriesJob>();
@@ -86,6 +92,7 @@ namespace hot_delivery_service
 
             app.UseMvc();
 
+            //Запуск планировщика задач
             var scheduler = serviceProvider.GetService<IDeliveryScheduler>();
             scheduler.StartTasks(); 
         }

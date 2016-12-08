@@ -8,6 +8,8 @@ using System.IO;
 
 namespace hot_delivery_service.Persistence.File
 {
+    //реализация юнита для работы с бд, основанной на списочном репозитории и файловым хранилищем
+    //для хранения данных был выбран формат json
     public class FileDeliveryWorkUnit : IDeliveryWorkUnit
     {
         private readonly object _lock = new object();
@@ -21,6 +23,7 @@ namespace hot_delivery_service.Persistence.File
             _deliveries = LoadData(_fileName);
         }
 
+        //чтение данных из файла в List и создание репозитория на его основе
         private ListRepository<Delivery> LoadData(string fileName)
         {
 
@@ -58,10 +61,12 @@ namespace hot_delivery_service.Persistence.File
         {
         }
 
+        //сохранение изменений
         public void SaveChanges()
         {
             lock (_lock)
             {
+                //проставляем добавленным записям id, на основании максимального из уже имеющихся
                 int maxId = _deliveries.Max(d => d.Id);
                 var deliveries = _deliveries.OrderBy(d => d.Id).ToList();
 
@@ -71,6 +76,7 @@ namespace hot_delivery_service.Persistence.File
                         delivery.Id = ++maxId;
                 }
 
+                //сериализуем в json и сохраняем в файл
                 string data = JsonConvert.SerializeObject(deliveries);
                 using (StreamWriter writer = new StreamWriter(new FileStream(_fileName, FileMode.OpenOrCreate, FileAccess.ReadWrite)))
                 {

@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace hot_delivery_service.Persistence.File
 {
+    //реализация репозитория, основанного на List
     public class ListRepository<TEntity> : IRepository<TEntity> where TEntity : class, new()
     {
         private List<TEntity> _entities;

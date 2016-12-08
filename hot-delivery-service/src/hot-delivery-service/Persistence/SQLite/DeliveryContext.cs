@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 
 namespace hot_delivery_service.Persistence.SQLite
 {
+    //стандартный dbcontext ef core
+    //конфигурирование посредством fluent-api
     public class DeliveryContext : DbContext
     {
         public DbSet<Delivery> Deliveries { get; set; }

@@ -7,6 +7,7 @@ namespace hot_delivery_service.Helpers
 {
     public class StorageOptions
     {
+        //класс для хранения опций, считанных из конфига
         public string StorageType { get; set; }
         public string StorageFileName { get; set; }
     }

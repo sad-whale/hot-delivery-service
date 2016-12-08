@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace hot_delivery_service.Commands
 {
+    //команда для пометки доставки, как просроченной
     public class DeliveryExpireCommand
     {
         public int DeliveryId { get; set; }

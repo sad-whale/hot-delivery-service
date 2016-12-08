@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 namespace hot_delivery_service.Commands
 {
+    //команда создания доставки
     public class CreateDeliveryCommand
     {
         public string Title { get; set; }

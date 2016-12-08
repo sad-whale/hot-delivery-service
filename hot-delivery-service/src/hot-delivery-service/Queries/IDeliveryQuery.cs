@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace hot_delivery_service.Queries
 {
+    //интерфейс для запроса к доставкам - моя попытка придерживаться принципов CQRS
     public interface IDeliveryQuery
     {
         IQueryable<Delivery> Deliveries { get; }

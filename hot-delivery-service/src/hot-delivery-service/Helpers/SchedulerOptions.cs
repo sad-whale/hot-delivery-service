@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 namespace hot_delivery_service.Helpers
 {
+    //класс для хранения опций, считанных из конфига
     public class SchedulerOptions
     {
         public int ExpirationTime { get; set; }

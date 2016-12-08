@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 
 namespace hot_delivery_service.Models
 {
+    //класс-модель доставки
     public class Delivery
     {
         public int Id { get; set; }

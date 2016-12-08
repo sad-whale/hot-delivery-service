@@ -14,6 +14,7 @@ namespace hot_delivery_service.Persistence
         private readonly IOptions<StorageOptions> _optionsAccessor;
         private DeliveryContext _context;
 
+        //внедрение EF контекста для sqlite и опций из конфига
         public DeliveryWorkUnitProvider(IOptions<StorageOptions> optionsAccessor, DeliveryContext context)
         {
             _optionsAccessor = optionsAccessor;
@@ -21,6 +22,7 @@ namespace hot_delivery_service.Persistence
         }
         public IDeliveryWorkUnit GetWorkUnit()
         {
+            //на основании значения опции StorageType создаем и возвращаем конкретный экземпляр
             string storageType = _optionsAccessor.Value.StorageType;
 
             switch (storageType)

@@ -9,6 +9,8 @@ using System.Threading.Tasks;
 
 namespace hot_delivery_service.Persistence.SQLite
 {
+    //реализация ef репозитория 
+    //повторяет функционал DbSet
     public class EfRepository<TEntity> : IRepository<TEntity> where TEntity : class, new()
     {
         private DbSet<TEntity> _dbSet;
