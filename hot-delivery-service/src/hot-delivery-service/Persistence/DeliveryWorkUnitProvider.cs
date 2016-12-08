@@ -1,5 +1,6 @@
 ﻿using hot_delivery_service.Helpers;
 using hot_delivery_service.Persistence.File;
+using hot_delivery_service.Persistence.SQLite;
 using Microsoft.Extensions.Options;
 using System;
 using System.Collections.Generic;
@@ -10,11 +11,13 @@ namespace hot_delivery_service.Persistence
 {
     public class DeliveryWorkUnitProvider : IDeliveryWorkUnitProvider
     {
-        private readonly IOptions<DeliveryOptions> _optionsAccessor;
+        private readonly IOptions<StorageOptions> _optionsAccessor;
+        private DeliveryContext _context;
 
-        public DeliveryWorkUnitProvider(IOptions<DeliveryOptions> optionsAccessor)
+        public DeliveryWorkUnitProvider(IOptions<StorageOptions> optionsAccessor, DeliveryContext context)
         {
             _optionsAccessor = optionsAccessor;
+            _context = context;
         }
         public IDeliveryWorkUnit GetWorkUnit()
         {
@@ -23,9 +26,9 @@ namespace hot_delivery_service.Persistence
             switch (storageType)
             {
                 case "file":
-                    return new FileDeliveryWorkUnit();
-                //case "sqlite":
-                //    return new SqliteDelivryWorkUnit();
+                    return new FileDeliveryWorkUnit(_optionsAccessor.Value.StorageFileName);
+                case "sqlite":
+                    return new SqliteDeliveryWorkUnit(_context);
                 default:
                     throw new Exception($"Unknown storage type: {storageType}");
             }

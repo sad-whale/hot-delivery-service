@@ -1,5 +1,5 @@
---temp-output:C:\Users\sbarikov\Source\Repos\hot-delivery-service\hot-delivery-service\src\hot-delivery-service\obj\Debug\netcoreapp1.0\
---out:C:\Users\sbarikov\Source\Repos\hot-delivery-service\hot-delivery-service\src\hot-delivery-service\bin\Debug\netcoreapp1.0\hot-delivery-service.dll
+--temp-output:C:\Users\sbarikov\Source\Repos\hot-delivery-service\hot-delivery-service\src\hot-delivery-service\bin\src\hot-delivery-service\obj\Debug\netcoreapp1.0\
+--out:C:\Users\sbarikov\Source\Repos\hot-delivery-service\hot-delivery-service\src\hot-delivery-service\bin\src\hot-delivery-service\bin\Debug\netcoreapp1.0\hot-delivery-service.dll
 --define:DEBUG
 --define:TRACE
 --define:NETCOREAPP1_0
@@ -197,7 +197,7 @@
 --reference:C:\Users\sbarikov\.nuget\packages\System.Threading.Timer\4.0.1\ref\netstandard1.2\System.Threading.Timer.dll
 --reference:C:\Users\sbarikov\.nuget\packages\System.Xml.ReaderWriter\4.0.11\ref\netstandard1.3\System.Xml.ReaderWriter.dll
 --reference:C:\Users\sbarikov\.nuget\packages\System.Xml.XDocument\4.0.11\ref\netstandard1.3\System.Xml.XDocument.dll
---resource:"C:\Users\sbarikov\Source\Repos\hot-delivery-service\hot-delivery-service\src\hot-delivery-service\obj\Debug\netcoreapp1.0\hot-delivery-servicedotnet-compile.deps.json",hot-delivery-service.deps.json
+--resource:"C:\Users\sbarikov\Source\Repos\hot-delivery-service\hot-delivery-service\src\hot-delivery-service\bin\src\hot-delivery-service\obj\Debug\netcoreapp1.0\hot-delivery-servicedotnet-compile.deps.json",hot-delivery-service.deps.json
 C:\Users\sbarikov\Source\Repos\hot-delivery-service\hot-delivery-service\src\hot-delivery-service\Program.cs
 C:\Users\sbarikov\Source\Repos\hot-delivery-service\hot-delivery-service\src\hot-delivery-service\Startup.cs
 C:\Users\sbarikov\Source\Repos\hot-delivery-service\hot-delivery-service\src\hot-delivery-service\CommandHandlers\DeliveryCommandHandler.cs

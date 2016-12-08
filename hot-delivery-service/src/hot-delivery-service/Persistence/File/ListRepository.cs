@@ -64,22 +64,7 @@ namespace hot_delivery_service.Persistence.File
             _entities.Add(entity);
             return entity;
         }
-
-        public TEntity Find(params object[] keyValues)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<TEntity> FindAsync(params object[] keyValues)
-        {
-            throw new NotImplementedException();
-        }
-
-        public Task<TEntity> FindAsync(CancellationToken cancellationToken, params object[] keyValues)
-        {
-            throw new NotImplementedException();
-        }
-
+        
         public IEnumerator<TEntity> GetEnumerator()
         {
             return _entities.GetEnumerator();

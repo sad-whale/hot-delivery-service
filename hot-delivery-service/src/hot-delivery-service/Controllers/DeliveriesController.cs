@@ -53,10 +53,10 @@ namespace hot_delivery_service.Controllers
             }
         }
 
-        //[HttpGet("api/create")]
-        //public int CreateTest()
-        //{
-        //    return _commandHandler.Handle(new CreateDeliveryCommand() { Title = "Test", ExpirationTime = 10 });
-        //}
+        [HttpGet("api/create")]
+        public int CreateTest()
+        {
+            return _commandHandler.Handle(new CreateDeliveryCommand() { Title = "Test", ExpirationTime = 10 });
+        }
     }
 }

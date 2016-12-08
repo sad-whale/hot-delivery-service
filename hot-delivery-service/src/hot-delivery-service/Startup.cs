@@ -14,6 +14,9 @@ using hot_delivery_service.Queries;
 using hot_delivery_service.Persistence;
 using hot_delivery_service.CommandHandlers;
 using hot_delivery_service.Helpers;
+using hot_delivery_service.Persistence.SQLite;
+using Microsoft.EntityFrameworkCore;
+using Microsoft.DotNet.InternalAbstractions;
 
 namespace hot_delivery_service
 {
@@ -34,10 +37,15 @@ namespace hot_delivery_service
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            string appBasePath = ApplicationEnvironment.ApplicationBasePath;
+
             services.AddOptions();
 
-            services.Configure<DeliveryOptions>(Configuration);
+            services.Configure<SchedulerOptions>(Configuration);
+            services.Configure<StorageOptions>(Configuration);
 
+            services.AddDbContext<DeliveryContext>(
+                options => { options.UseSqlite($"Data Source=deliveries.db"); });
             services.AddTransient<IDeliveryWorkUnitProvider, DeliveryWorkUnitProvider>();
             services.AddTransient<IDeliveryQuery, DeliveryQuery>();
             services.AddTransient<IDeliveryCommandHandler, DeliveryCommandHandler>();

@@ -15,9 +15,9 @@ namespace hot_delivery_service.Persistence.File
         private string _fileName;
         private ListRepository<Delivery> _deliveries;
 
-        public FileDeliveryWorkUnit()
+        public FileDeliveryWorkUnit(string storageFileName)
         {
-            _fileName = "data.json";
+            _fileName = storageFileName;
             _deliveries = LoadData(_fileName);
         }
 

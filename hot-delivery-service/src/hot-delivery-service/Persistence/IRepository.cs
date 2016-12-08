@@ -13,9 +13,6 @@ namespace hot_delivery_service.Persistence
         IEnumerable<TEntity> AddRange(IEnumerable<TEntity> entities);
         TEntity Attach(TEntity entity);
         TEntity Create();
-        TEntity Find(params object[] keyValues);
-        Task<TEntity> FindAsync(params object[] keyValues);
-        Task<TEntity> FindAsync(CancellationToken cancellationToken, params object[] keyValues);
         TEntity Remove(TEntity entity);
         IEnumerable<TEntity> RemoveRange(IEnumerable<TEntity> entities);
     }
